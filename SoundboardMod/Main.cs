@@ -27,6 +27,7 @@ namespace SoundpadMod
             int type = 2;
             _vmr.GetVoicemeeterType(out type);
             _vmr.RunVoicemeeter(type);
+            Task.Delay(6000).Wait();
             _vmr.Login();
             _vmr.SetParameter("Recorder.mode.PlayOnLoad", 1);
             MelonCoroutines.Start(WaitForUI());
@@ -76,10 +77,13 @@ namespace SoundpadMod
                 x++;
                 if (x == 4 && y == 3 && !flag)
                 {
-                    nestedButton = new QMNestedButton(tabMenu, x, y, "More", "More sounds", "More sounds");
-                    flag = true;
-                    x = 1;
-                    y = 0;
+                    if (_files.Length > 12)
+                    {
+                        nestedButton = new QMNestedButton(tabMenu, x, y, "More", "More sounds", "More sounds");
+                        flag = true;
+                        x = 1;
+                        y = 0;
+                    }
                 }
                 else if(x == 4 && y == 3 && flag)
                 {
