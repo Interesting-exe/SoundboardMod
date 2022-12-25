@@ -72,6 +72,7 @@ namespace SoundpadMod
             QMNestedButton miscButton = new QMNestedButton(_tabMenu, 4f, 0f, "Misc", "Miscellaneous", "Miscellaneous");
             QMSingleButton reloadButton = new QMSingleButton (miscButton, 1f, 0f, $"Reload sounds", delegate { ReloadSounds(); }, "Reload the list of sounds");
             QMToggleButton loopButton = new QMToggleButton(miscButton, 2f, 0f, "Loop", delegate { _vmr.SetParameter("Recorder.mode.Loop", 1); }, delegate { _vmr.SetParameter("Recorder.mode.Loop", 0); }, "Toggle loop");
+            QMSingleButton openSoundsFolderButton = new QMSingleButton(miscButton, 3f, 0f, "Open sounds folder", delegate { System.Diagnostics.Process.Start(Path); }, "Open the sounds folder");
             float v = 0;
             _vmr.GetParameter("Recorder.mode.Loop", out v);
             if(v == 1)

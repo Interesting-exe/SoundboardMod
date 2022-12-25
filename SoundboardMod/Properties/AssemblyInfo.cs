@@ -6,7 +6,7 @@ using Main = SoundpadMod.Main;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: MelonInfo(typeof(Main), "Soundboard", "1.0.0", "Interesting")]
+[assembly: MelonInfo(typeof(Main), "Soundboard", "1.0.1", "Interesting")]
 [assembly: AssemblyTitle("SoundboardMod")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
