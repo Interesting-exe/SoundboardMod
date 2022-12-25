@@ -5,7 +5,10 @@ A soundboard in vrchat for vr users.
 You need [VoiceMeeter Banana](https://vb-audio.com/Voicemeeter/banana.htm) or [Potato](https://vb-audio.com/Voicemeeter/potato.htm) for this mod. **regular VoiceMeeter wont work with this**
 
 ## Adding sounds
-just add sounds to the sounds folder. both mp3 and wav files are supported but it is recommended to use wav cus some mp3s sound like shit for some reason
+just add sounds to the sounds folder. If you're adding while VRChat is open, open the misc options and click reload sounds.
+both mp3 and wav files are supported but it is recommended to use wav cus some mp3s sound like shit for some reason
+
+https://user-images.githubusercontent.com/52731127/209481044-4b42e6e8-7e7d-4ffc-96a1-9068f60ddce4.mp4
 
 ## Preview
 
