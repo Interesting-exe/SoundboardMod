@@ -88,7 +88,7 @@ namespace SoundpadMod
                 else if(x == 4 && y == 3 && flag)
                 {
                     nestedButton = new QMNestedButton(nestedButton, x, y, "More", "More sounds", "More sounds");
-                    
+
                     x = 1;
                     y = 0;
                 }
