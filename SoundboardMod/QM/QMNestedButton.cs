@@ -48,6 +48,21 @@ namespace ApolloCore.API.QM
                 list.Add(MenuPage);
                 APIUtils.MenuStateControllerInstance.field_Public_ArrayOf_UIPage_0 = list.ToArray();
             }
+            
+            GameObject grid = new GameObject();
+            grid.AddComponent<GridLayoutGroup>();
+            GridLayoutGroup layoutGroup = grid.GetComponent<GridLayoutGroup>();
+            layoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            layoutGroup.constraintCount = 4;
+            layoutGroup.cellSize = new Vector2(185, 170);
+            layoutGroup.spacing = new Vector2(35, 35);
+            layoutGroup.childAlignment = TextAnchor.LowerCenter;
+            GameObject gridObject = Object.Instantiate(grid, MenuObject.transform.Find("ScrollRect/Viewport"));
+            gridObject.name = "GridLayout";
+            GameObject buttonParent = new GameObject();
+            GameObject buttons = Object.Instantiate(buttonParent, gridObject.transform);
+            buttons.transform.localPosition = new Vector3(-525, 125, 0);
+            buttons.name = "Buttons";
 
             MenuObject.transform.Find("ScrollRect/Viewport/VerticalLayoutGroup").DestroyChildren();
             MenuTitleText = MenuObject.GetComponentInChildren<TextMeshProUGUI>(true);
@@ -73,7 +88,9 @@ namespace ApolloCore.API.QM
             MainButton = new QMSingleButton(btnQMLoc, btnPosX, btnPosY, btnText, OpenMe, btnToolTipText, halfButton);
 
             ClearChildren();
-            MenuObject.transform.Find("ScrollRect").GetComponent<ScrollRect>().enabled = false;
+            MenuObject.transform.Find("ScrollRect").GetComponent<ScrollRect>().enabled = true;
+            MenuObject.transform.Find("ScrollRect").GetComponent<ScrollRect>().content = gridObject.GetComponent<RectTransform>();
+            MenuObject.transform.Find("ScrollRect").GetComponent<ScrollRect>().verticalScrollbar = MenuObject.transform.Find("ScrollRect/Scrollbar").GetComponent<Scrollbar>();
         }
 
         public void OpenMe()

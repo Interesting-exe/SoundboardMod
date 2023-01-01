@@ -59,12 +59,13 @@ namespace SoundpadMod
         {
             while (VRCUiManager.prop_VRCUiManager_0 == null) yield return null;
             while (APIUtils.QuickMenuInstance.transform.Find("CanvasGroup/Container/Window/QMParent/BackgroundLayer01") == null) yield return null;
+            
             Sprite icon = APIUtils.GetQMMenuTemplate().transform.parent
                 .Find(
                     "Menu_AudioSettings/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/MicrophoneSettings/Sliders/MicSensitivity&Indicator/Cell_UI_MicActiveIndicator/Icon_On")
                 .gameObject.GetComponent<Image>().sprite;
             _tabMenu = new QMTabMenu("Soundboard", "Soundboard", icon);
-            
+
             QMSingleButton playButton = new QMSingleButton(_tabMenu, 1f, 0f, "Play", delegate { _vmr.SetParameter("recorder.play", 1); }, "Play the last played/recorded sound");
             QMSingleButton stopButton = new QMSingleButton(_tabMenu, 2f, 0f, "Stop", delegate { _vmr.SetParameter("recorder.stop", 1); }, "Stop sound");
             QMToggleButton recordButton = new QMToggleButton(_tabMenu, 3f, 0f, "Record audio", delegate { _vmr.SetParameter("recorder.record", 1); }, delegate { _vmr.SetParameter("recorder.record", 0); _vmr.SetParameter("recorder.stop", 1); }, "Record audio");
@@ -73,6 +74,11 @@ namespace SoundpadMod
             QMSingleButton reloadButton = new QMSingleButton (miscButton, 1f, 0f, $"Reload sounds", delegate { ReloadSounds(); }, "Reload the list of sounds");
             QMToggleButton loopButton = new QMToggleButton(miscButton, 2f, 0f, "Loop", delegate { _vmr.SetParameter("Recorder.mode.Loop", 1); }, delegate { _vmr.SetParameter("Recorder.mode.Loop", 0); }, "Toggle loop");
             QMSingleButton openSoundsFolderButton = new QMSingleButton(miscButton, 3f, 0f, "Open sounds folder", delegate { System.Diagnostics.Process.Start(Path); }, "Open the sounds folder");
+            
+            RectTransform rectTransform = miscButton.GetMenuObject().transform.Find("ScrollRect/Viewport/GridLayout").GetComponent<RectTransform>();
+            rectTransform.offsetMax = new Vector2(0, 0);
+            rectTransform.pivot = new Vector2(0.5f, 1);
+            
             float v = 0;
             _vmr.GetParameter("Recorder.mode.Loop", out v);
             if(v == 1)
@@ -107,16 +113,16 @@ namespace SoundpadMod
                                  delegate { PlaySound(System.IO.Path.GetFileName(file)); }, "Play the sound"); _buttons.Add(button);
                 _buttons.Add(button);
                 x++;
-                if (x == 4 && y == 3)
-                {
-                    if (_files.Length > 12)
-                    {
-                        if(_nestedButtons.Count == 0)
-                            _nestedButtons.Add(new QMNestedButton(_tabMenu, 4, 3, "More", "More", "More"));
-                        LoadMoreSounds(i+1, _nestedButtons[0], 0);
-                        break;
-                    }
-                }
+                // if (x == 4 && y == 3)
+                // {
+                //     if (_files.Length > 12)
+                //     {
+                //         if(_nestedButtons.Count == 0)
+                //             _nestedButtons.Add(new QMNestedButton(_tabMenu, 4, 3, "More", "More", "More"));
+                //         LoadMoreSounds(i+1, _nestedButtons[0], 0);
+                //         break;
+                //     }
+                // }
 
                 if (x > 4)
                 {
@@ -125,6 +131,16 @@ namespace SoundpadMod
                 }
 
                 i++;
+            }
+
+            RectTransform rectTransform = _tabMenu.GetMenuObject().transform.Find("ScrollRect/Viewport/GridLayout")
+                .gameObject.GetComponent<RectTransform>();
+            rectTransform.offsetMax = new Vector2(0, 0);
+            rectTransform.pivot = new Vector2(0.5f, 1);
+            if (y > 3)
+            {
+                rectTransform.offsetMin = new Vector2(0, -((y + 9) * 100));
+                rectTransform.sizeDelta = new Vector2(0, ((y + 9) * 100));
             }
         }
 
