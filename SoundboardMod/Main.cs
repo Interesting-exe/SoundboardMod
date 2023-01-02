@@ -135,6 +135,7 @@ namespace SoundpadMod
 
             RectTransform rectTransform = _tabMenu.GetMenuObject().transform.Find("ScrollRect/Viewport/GridLayout")
                 .gameObject.GetComponent<RectTransform>();
+            rectTransform.transform.parent.gameObject.GetComponent<RectMask2DEx>().enabled = true;
             rectTransform.offsetMax = new Vector2(0, 0);
             rectTransform.pivot = new Vector2(0.5f, 1);
             if (y > 3)
