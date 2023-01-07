@@ -34,7 +34,7 @@ namespace ApolloCore.API.QM
 
         private void Initialize(float btnXLocation, float btnYLocation, string btnText, Action onAction, Action offAction, string btnToolTip, bool defaultState)
         {
-            button = UnityEngine.Object.Instantiate(APIUtils.GetQMButtonTemplate(), APIUtils.QuickMenuInstance.transform.Find("CanvasGroup/Container/Window/QMParent/" + btnQMLoc +"/ScrollRect/Viewport/GridLayout/Buttons").transform, true);
+            button = UnityEngine.Object.Instantiate(APIUtils.GetQMButtonTemplate(), APIUtils.QuickMenuInstance.transform.Find("CanvasGroup/Container/Window/QMParent/" + btnQMLoc +"/ScrollRect/Viewport/GridLayout").transform, true);
             button.name = $"{APIUtils.Identifier}-Toggle-Button-{APIUtils.RandomNumbers()}";
             button.transform.Find("Badge_MMJump").gameObject.SetActive(false);
             button.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 176);

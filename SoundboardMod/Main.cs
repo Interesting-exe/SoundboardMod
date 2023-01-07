@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +9,6 @@ using AtgDev.Voicemeeter;
 using AtgDev.Voicemeeter.Utils;
 using MelonLoader;
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.UI;
 using VRC.UI.Elements.Controls;
 
@@ -75,10 +73,11 @@ namespace SoundpadMod
             QMToggleButton loopButton = new QMToggleButton(miscButton, 2f, 0f, "Loop", delegate { _vmr.SetParameter("Recorder.mode.Loop", 1); }, delegate { _vmr.SetParameter("Recorder.mode.Loop", 0); }, "Toggle loop");
             QMSingleButton openSoundsFolderButton = new QMSingleButton(miscButton, 3f, 0f, "Open sounds folder", delegate { System.Diagnostics.Process.Start(Path); }, "Open the sounds folder");
             
+            miscButton.GetMenuObject().transform.Find("ScrollRect/Viewport/GridLayout")
+                .gameObject.GetComponent<GridLayoutGroup>().padding.top = 35;
             RectTransform rectTransform = miscButton.GetMenuObject().transform.Find("ScrollRect/Viewport/GridLayout").GetComponent<RectTransform>();
-            rectTransform.offsetMax = new Vector2(0, 0);
-            rectTransform.pivot = new Vector2(0.5f, 1);
-            
+            rectTransform.pivot = new Vector2(1.6f, 1);
+
             float v = 0;
             _vmr.GetParameter("Recorder.mode.Loop", out v);
             if(v == 1)
@@ -105,7 +104,6 @@ namespace SoundpadMod
         {
             int x = 1;
             int y = 1;
-            int i = 0;
             _files = Directory.GetFiles(Path,  ".").Where(file => file.EndsWith(".wav") || file.EndsWith(".mp3")).ToArray();
             foreach (string file in _files)
             {
@@ -113,116 +111,20 @@ namespace SoundpadMod
                                  delegate { PlaySound(System.IO.Path.GetFileName(file)); }, "Play the sound"); _buttons.Add(button);
                 _buttons.Add(button);
                 x++;
-                // if (x == 4 && y == 3)
-                // {
-                //     if (_files.Length > 12)
-                //     {
-                //         if(_nestedButtons.Count == 0)
-                //             _nestedButtons.Add(new QMNestedButton(_tabMenu, 4, 3, "More", "More", "More"));
-                //         LoadMoreSounds(i+1, _nestedButtons[0], 0);
-                //         break;
-                //     }
-                // }
 
                 if (x > 4)
                 {
                     y++;
                     x = 1;
                 }
-
-                i++;
             }
 
+            _tabMenu.GetMenuObject().transform.Find("ScrollRect/Viewport/GridLayout")
+                .gameObject.GetComponent<GridLayoutGroup>().padding.top = 35;
             RectTransform rectTransform = _tabMenu.GetMenuObject().transform.Find("ScrollRect/Viewport/GridLayout")
                 .gameObject.GetComponent<RectTransform>();
             rectTransform.transform.parent.gameObject.GetComponent<RectMask2DEx>().enabled = true;
-            rectTransform.offsetMax = new Vector2(0, 0);
-            rectTransform.pivot = new Vector2(0.5f, 1);
-            if (y > 3)
-            {
-                rectTransform.offsetMin = new Vector2(0, -((y + 9) * 100));
-                rectTransform.sizeDelta = new Vector2(0, ((y + 9) * 100));
-            }
+            rectTransform.pivot = new Vector2(0.6f, 1);
         }
-
-        private static void LoadMoreSounds(int index, QMNestedButton menu, int menuIndex)
-        {
-            int x = 1;
-            int y = 0;
-            for(int i = index ; i < _files.Length; i++)
-            {
-                var j = i;
-                QMSingleButton button = new QMSingleButton(menu, x, y, System.IO.Path.GetFileNameWithoutExtension(_files[i]),
-                    delegate { PlaySound(System.IO.Path.GetFileName(_files[j])); }, "Play the sound");
-                _buttons.Add(button);
-                x++;
-                if (x == 4 && y == 3)
-                {
-                    if(i + 1 < _files.Length)
-                    {
-                        if(_nestedButtons.Count <= menuIndex + 1)
-                        {
-                            QMNestedButton nestedButton = new QMNestedButton(menu, 4, 3, "More", "More", "More");
-                            _nestedButtons.Add(nestedButton);
-                        }
-                        LoadMoreSounds(i+1, _nestedButtons[menuIndex+1], menuIndex+1);
-                        break;
-                    }
-                }
-                if (x > 4)
-                {
-                    y++;
-                    x = 1;
-                }
-            }
-        }
-        
-        // private static void LoadSounds()
-        // {
-        //     int x = 1;
-        //     int y = 1;
-        //     _files = Directory.GetFiles(Path,  ".").Where(file => file.EndsWith(".wav") || file.EndsWith(".mp3")).ToArray();
-        //     _multiplePages = false;
-        //     QMNestedButton nestedButton = null;
-        //     foreach (string file in _files)
-        //     {
-        //         if (!_multiplePages)
-        //         {
-        //             QMSingleButton button = new QMSingleButton(_tabMenu, x, y, System.IO.Path.GetFileNameWithoutExtension(file),
-        //                 delegate { PlaySound(System.IO.Path.GetFileName(file)); }, "Play the sound");
-        //             _buttons.Add(button);
-        //         }
-        //         else
-        //         {
-        //             QMSingleButton button = new QMSingleButton(nestedButton, x, y, System.IO.Path.GetFileNameWithoutExtension(file), delegate { PlaySound(System.IO.Path.GetFileName(file)); }, "Play the sound");
-        //             _buttons.Add(button);
-        //         }
-        //         x++;
-        //         if (x == 4 && y == 3 && !_multiplePages)
-        //         {
-        //             if (_files.Length > 12)
-        //             {
-        //                 nestedButton = new QMNestedButton(_tabMenu, x, y, "More", "More sounds", "More sounds");
-        //                 _nestedButtons.Add(nestedButton);
-        //                 _multiplePages = true;
-        //                 x = 1;
-        //                 y = 0;
-        //             }
-        //         }
-        //         else if(x == 4 && y == 3 && _multiplePages)
-        //         {
-        //             nestedButton = new QMNestedButton(nestedButton, x, y, "More", "More sounds", "More sounds");
-        //             _nestedButtons.Add(nestedButton);
-        //             x = 1;
-        //             y = 0;
-        //         }
-        //
-        //         if (x > 4)
-        //         {
-        //             y++;
-        //             x = 1;
-        //         }
-        //     }
-        // }
     }
 }

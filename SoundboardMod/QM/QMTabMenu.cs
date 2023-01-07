@@ -51,10 +51,8 @@ namespace ApolloCore.API.QM
             layoutGroup.childAlignment = TextAnchor.LowerCenter;
             GameObject gridObject = Object.Instantiate(grid, MenuObject.transform.Find("ScrollRect/Viewport"));
             gridObject.name = "GridLayout";
-            GameObject buttonParent = new GameObject();
-            GameObject buttons = Object.Instantiate(buttonParent, gridObject.transform);
-            buttons.transform.localPosition = new Vector3(-525, 125, 0);
-            buttons.name = "Buttons";
+            gridObject.AddComponent<ContentSizeFitter>();
+            gridObject.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.MinSize;
 
             MenuObject.transform.Find("ScrollRect/Viewport/VerticalLayoutGroup").DestroyChildren();
             MenuTitleText = MenuObject.GetComponentInChildren<TextMeshProUGUI>(true);
