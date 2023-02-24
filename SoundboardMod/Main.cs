@@ -58,10 +58,7 @@ namespace SoundpadMod
             while (VRCUiManager.prop_VRCUiManager_0 == null) yield return null;
             while (APIUtils.QuickMenuInstance.transform.Find("CanvasGroup/Container/Window/QMParent/BackgroundLayer01") == null) yield return null;
             
-            Sprite icon = APIUtils.GetQMMenuTemplate().transform.parent
-                .Find(
-                    "Menu_AudioSettings/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/MicrophoneSettings/Sliders/MicSensitivity&Indicator/Cell_UI_MicActiveIndicator/Icon_On")
-                .gameObject.GetComponent<Image>().sprite;
+            Sprite icon = APIUtils.GetQMMenuTemplate().transform.parent.Find("Menu_AudioSettings/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/MicrophoneSettings/MicrophoneSettings/Sliders/MicSensitivity&Indicator/Cell_UI_MicActiveIndicator/Icon_On").gameObject.GetComponent<Image>().sprite;
             _tabMenu = new QMTabMenu("Soundboard", "Soundboard", icon);
 
             QMSingleButton playButton = new QMSingleButton(_tabMenu, 1f, 0f, "Play", delegate { _vmr.SetParameter("recorder.play", 1); }, "Play the last played/recorded sound");

@@ -7,7 +7,7 @@ namespace ApolloCore.API
 {
     public static class APIUtils
     {
-        internal const string Identifier = "Apollo";
+        internal const string Identifier = "Soundboard";
         private static readonly System.Random rnd = new();
         private static VRC.UI.Elements.QuickMenu _quickMenu;
         private static MenuStateController _menuStateController;
